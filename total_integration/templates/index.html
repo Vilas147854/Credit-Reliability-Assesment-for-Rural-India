@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rural Credit Reliability Assessment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #584040;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script type="text/javascript">
+        function showErrorPopup(message) {
+            alert(message);
+        }
+
+        function validateForm() {
+            var monthlyExpenses = parseFloat(document.getElementsByName("monthly_expenses")[0].value);
+            var annualIncome = parseFloat(document.getElementsByName("annual_income")[0].value);
+            var loan_tenure = parseFloat(document.getElementsByName("loan_tenure")[0].value);
+            var loan_installments = parseFloat(document.getElementsByName("loan_installments")[0].value);
+            if (monthlyExpenses > (annualIncome / 12)) {
+                showErrorPopup("Monthly expenses cannot exceed one-twelfth of the annual income. !!");
+                return false;
+            }
+            if (loan_installments < loan_tenure){
+                showErrorPopup("Loan installments must be >= Loan Tenure1!!");
+                return false;
+            }
+            // Set loan purpose values
+            var loanPurposeRadios = document.getElementsByName("loan_purpose");
+            var loanPurposeValue = "";
+            for (var i = 0; i < loanPurposeRadios.length; i++) {
+                if (loanPurposeRadios[i].checked) {
+                    loanPurposeValue = "1";
+                } else {
+                    loanPurposeValue = "0";
+                }
+                document.getElementsByName(loanPurposeRadios[i].value)[0].value = loanPurposeValue;
+            }
+            var Typehouse = document.getElementsByName("TOH");
+            var typehousevalue="";
+            for (var i = 0; i < Typehouse.length; i++) {
+                if (Typehouse[i].checked) {
+                    typehousevalue = "1";
+                } else {
+                    typehousevalue = "0";
+                }
+                document.getElementsByName(Typehouse[i].value)[0].value = typehousevalue;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Credit Reliability Assessment For Rural India</h2><br>
+        <form action="/predict" method="post" onsubmit="return validateForm()">
+            <label for="sex_M">Sex (M/F):</label>
+            <input type="text" name="sex_M">
+            <label for="sex_TG">Sex (TG):</label>
+            <input type="text" name="sex_TG">
+            <label for="annual_income">Annual Income:</label>
+            <input type="text" name="annual_income">
+            <label for="monthly_expenses">Monthly Expenses:</label>
+            <input type="text" name="monthly_expenses">
+            <label for="young_dependents">Young Dependents:</label>
+            <input type="text" name="young_dependents">
+            <label for="house_area">House Area:</label>
+            <input type="text" name="house_area">
+            <label for="loan_tenure">Loan Tenure:</label>
+            <input type="text" name="loan_tenure">
+            <label for="occupants_count">Occupants Count:</label>
+            <input type="text" name="occupants_count">
+            <label for="loan_installments">Loan Installments:</label>
+            <input type="text" name="loan_installments">
+            <label for="age">Age:</label>
+            <input type="text" name="age">
+            <label for="old_dependents">Old Dependents:</label>
+            <input type="text" name="old_dependents">
+            <label for="home_ownership">Home Ownership:</label>
+            <input type="text" name="home_ownership">
+            <label>Loan Purpose:</label>
+            <label><input type="radio" name="loan_purpose" value="Apparels"> Apparels</label>
+            <label><input type="radio" name="loan_purpose" value="Agro Based Businesses"> Agro Based Businesses</label>
+            <label><input type="radio" name="loan_purpose" value="Animal Husbandry"> Animal Husbandry</label>
+            <label><input type="radio" name="loan_purpose" value="Meat Businesses"> Meat Businesses</label>
+            <label><input type="radio" name="loan_purpose" value="Handicrafts"> Handicrafts</label>
+            <label><input type="radio" name="loan_purpose" value="Farming/Agriculture"> Farming/Agriculture</label>
+            <label><input type="radio" name="loan_purpose" value="Education Loan"> Education Loan</label>
+            <label><input type="radio" name="loan_purpose" value="Retail Store"> Retail Store</label>
+            <label><input type="radio" name="loan_purpose" value="Eateries"> Eateries</label>
+            <label><input type="radio" name="loan_purpose" value="Business Services - II"> Business Services - II</label><br><br>
+            <label>Type of House:</label><br>
+            <label><input type="radio" name="TOH" value="type_of_house_T1"> T1:</label><br>
+            <label><input type="radio" name="TOH" value="type_of_house_T2"> T2:</label>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
